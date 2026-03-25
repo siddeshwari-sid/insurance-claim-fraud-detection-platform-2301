@@ -9,9 +9,13 @@ import LoginPage from './pages/LoginPage';
 import { isAuthed, isAuthEnabled, signOut } from './auth/auth';
 import { getAppName } from './config/brand';
 
-function RequireAuth({ children }) {
+function RequireAuth({ children, authEnabled }) {
   const location = useLocation();
-  if (!isAuthed()) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+
+  // Gate only when auth is enabled; otherwise, let the app work without redirects.
+  if (authEnabled && !isAuthed()) {
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  }
   return children;
 }
 
@@ -39,18 +43,16 @@ function App() {
       <Route
         path="/login"
         element={
-          enabled && !authed ? (
-            <LoginPage appName={getAppName()} onSuccess={onLoginSuccess} />
-          ) : (
-            <Navigate to="/upload" replace />
-          )
+          // Always render the login page on /login.
+          // The page itself can display a note if auth is disabled.
+          <LoginPage appName={getAppName()} onSuccess={onLoginSuccess} />
         }
       />
 
       <Route
         path="/*"
         element={
-          <RequireAuth>
+          <RequireAuth authEnabled={enabled}>
             <Layout authed={authed} authEnabled={enabled} onLogout={onLogout}>
               <Routes>
                 <Route path="/" element={<Navigate to="/upload" replace />} />
