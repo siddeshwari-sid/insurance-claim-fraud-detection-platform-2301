@@ -1,8 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders sidebar navigation', () => {
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+  expect(screen.getByText(/FraudWatch/i)).toBeInTheDocument();
+  expect(screen.getByText(/Upload/i)).toBeInTheDocument();
+  expect(screen.getByText(/Claims/i)).toBeInTheDocument();
+  expect(screen.getByText(/Reports/i)).toBeInTheDocument();
 });
