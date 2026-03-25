@@ -8,7 +8,7 @@ test('renders sidebar navigation', () => {
       <App />
     </BrowserRouter>
   );
-  expect(screen.getByText(/FraudWatch/i)).toBeInTheDocument();
+  expect(screen.getByText(/ClaimSentry/i)).toBeInTheDocument();
   expect(screen.getByText(/Upload/i)).toBeInTheDocument();
   expect(screen.getByText(/Claims/i)).toBeInTheDocument();
   expect(screen.getByText(/Reports/i)).toBeInTheDocument();

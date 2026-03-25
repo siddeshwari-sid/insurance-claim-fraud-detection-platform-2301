@@ -33,6 +33,7 @@ export default function UploadPage() {
     setFile(f || null);
     if (!f) return;
 
+    // We read the file to send it to the backend, but we do not display the CSV text in the UI.
     const text = await f.text();
     setCsvText(text);
   }
@@ -41,6 +42,7 @@ export default function UploadPage() {
     setError('');
     setResult(null);
     setFile(null);
+    // Example data is used internally for upload, but is not displayed in the UI.
     setCsvText(exampleCsv());
   }
 
@@ -72,9 +74,7 @@ export default function UploadPage() {
       <div className="pageHeader">
         <div>
           <h1 className="h1">Upload Claims</h1>
-          <div className="subtext">
-            Upload a CSV file to run rule-based fraud scoring and instantly generate risk-ranked claims, reasons, and reports.
-          </div>
+          <div className="subtext">Upload a CSV file to run fraud scoring and generate claims + reports.</div>
         </div>
         <div className="btnRow">
           <button className="button" onClick={onUseExample} type="button">
@@ -89,48 +89,46 @@ export default function UploadPage() {
       <div className="grid2">
         <div className="card">
           <div className="cardBody">
-            <label className="label" htmlFor="file">Choose CSV file</label>
+            <label className="label" htmlFor="file">
+              Choose CSV file
+            </label>
             <input id="file" className="input" type="file" accept=".csv,text/csv" onChange={onPickFile} />
-
-            <div style={{ height: 12 }} />
-
-            <label className="label" htmlFor="csv">Or paste CSV text</label>
-            <textarea
-              id="csv"
-              className="textarea"
-              rows={12}
-              value={csvText}
-              onChange={(e) => setCsvText(e.target.value)}
-              placeholder="claimId,claimantName,policyId,claimAmount,..."
-            />
+            <div style={{ height: 10 }} />
+            <div style={{ fontSize: 12, color: 'var(--textMuted)' }}>
+              Selected file contents are not displayed.
+            </div>
           </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {error ? <div className="error"><strong>Error:</strong> {error}</div> : null}
+          {error ? (
+            <div className="error">
+              <strong>Error:</strong> {error}
+            </div>
+          ) : null}
 
           {result ? (
             <div className="notice">
               <div style={{ fontWeight: 900, marginBottom: 6 }}>Upload complete</div>
-              <div>Inserted: <strong>{result.inserted}</strong></div>
-              <div>Total rows: <strong>{result.totalRows}</strong></div>
-              <div>Queue ID: <strong>{result.queueId}</strong></div>
-            </div>
-          ) : (
-            <div className="notice">
-              <div style={{ fontWeight: 900, marginBottom: 6 }}>CSV headers</div>
-              <div style={{ fontSize: 13, color: 'var(--textMuted)' }}>
-                Recommended columns: <code>claimId, claimantName, policyId, claimAmount, incidentType, incidentDate, filedDate, claimantAge, priorClaims, description, status</code>.
-                Other headers are accepted and stored under <code>raw</code>.
+              <div>
+                Inserted: <strong>{result.inserted}</strong>
+              </div>
+              <div>
+                Total rows: <strong>{result.totalRows}</strong>
+              </div>
+              <div>
+                Queue ID: <strong>{result.queueId}</strong>
               </div>
             </div>
-          )}
+          ) : null}
 
           <div className="card">
             <div className="cardBody">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
                 <div style={{ fontWeight: 900 }}>Upload Queue</div>
-                <button className="button" type="button" onClick={refreshQueue}>Refresh</button>
+                <button className="button" type="button" onClick={refreshQueue}>
+                  Refresh
+                </button>
               </div>
               <div style={{ height: 10 }} />
               {queue.length === 0 ? (
@@ -146,14 +144,15 @@ export default function UploadPage() {
                       <div style={{ fontSize: 13, marginTop: 6 }}>
                         Status: <strong>{q.status}</strong> · Rows: <strong>{q.totalRows}</strong>
                       </div>
-                      {q.error ? <div style={{ marginTop: 6, fontSize: 12, color: '#b91c1c' }}>{q.error}</div> : null}
+                      {q.error ? (
+                        <div style={{ marginTop: 6, fontSize: 12, color: '#b91c1c' }}>{q.error}</div>
+                      ) : null}
                     </div>
                   ))}
                 </div>
               )}
             </div>
           </div>
-
         </div>
       </div>
     </div>
