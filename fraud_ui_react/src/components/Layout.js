@@ -29,7 +29,7 @@ export default function Layout({ children }) {
 
         <div className="sidebarFooter">
           <div className="hint">
-            Data is stored <strong>in-memory</strong> on the server for the active session.
+            Tip: Upload a dataset and explore the highest-risk claims with scoring explanations and reports.
           </div>
         </div>
       </aside>

@@ -50,7 +50,7 @@ export default function ReportsPage() {
       <div className="pageHeader">
         <div>
           <h1 className="h1">Reports</h1>
-          <div className="subtext">High-level risk distribution and top risky claims (from current in-memory session).</div>
+          <div className="subtext">High-level risk distribution and the most suspicious claims in your current dataset.</div>
         </div>
         <div className="btnRow">
           <button className="button" type="button" onClick={load} disabled={busy}>

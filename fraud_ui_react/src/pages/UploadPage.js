@@ -73,7 +73,7 @@ export default function UploadPage() {
         <div>
           <h1 className="h1">Upload Claims</h1>
           <div className="subtext">
-            Upload a CSV file to run rule-based fraud scoring. Claims are stored in memory for this server session.
+            Upload a CSV file to run rule-based fraud scoring and instantly generate risk-ranked claims, reasons, and reports.
           </div>
         </div>
         <div className="btnRow">
